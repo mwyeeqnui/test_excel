@@ -29,6 +29,7 @@ def handle_excel_gui():
         doc_path.set(doc_name)
 
     def handle_excel(dir_path):
+        '''处理EXCEL文件生成以D排序的列表'''
 
         wb = openpyxl.load_workbook(dir_path)
         get_sheet_name = wb.get_sheet_names()[0]  # 只能取出EXCEL中的第一个工作表
@@ -102,6 +103,7 @@ def handle_excel_gui():
         return p_end_list
 
     def to_docx():
+        '''生成WORD文档'''
         excel_list = handle_excel(en_excel.get())
         item_int = 0
         test_int = 0
