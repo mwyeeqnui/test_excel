@@ -32,8 +32,7 @@ def handle_excel_gui():
         '''处理EXCEL文件生成以D排序的列表'''
 
         wb = openpyxl.load_workbook(dir_path)
-        get_sheet_name = wb.get_sheet_names()[0]  # 只能取出EXCEL中的第一个工作表
-        sheet = wb.get_sheet_by_name(get_sheet_name)
+        sheet = wb[wb.sheetnames[0]]
         r_value = []  # 用于放入R列值的list，减少循环次数--> 临时list
         r_start_int = 2  # range中的最小值，方法循环
         end_list = []  # 最终要装入所有数据的list
@@ -214,7 +213,10 @@ def handle_excel_gui():
                 for every_list in item:
                     zong_jing_e += float(every_list[1])
                     song_shen_e += float(every_list[2])
-                    shen_ding_e += float(every_list[3])
+                    if every_list[3]:
+                        shen_ding_e += float(every_list[3])
+                    else:
+                        shen_ding_e = 0.00
                 sheng_jian = song_shen_e - shen_ding_e
                 avg_shen_jian = (sheng_jian / song_shen_e) * 100
                 p6 = document.add_paragraph()
@@ -265,7 +267,10 @@ def handle_excel_gui():
                         for test_item in sort_company:
                             if list_company[7] == test_item[7]:
                                 sec_songshen_e += float(test_item[2])
-                                sec_shending_e += float(test_item[3])
+                                if test_item[3]:
+                                    sec_shending_e += float(test_item[3])
+                                else:
+                                    sec_songshen_e = 0.00
                         sec_shenjian_e = sec_songshen_e - sec_shending_e
                         run_p9 = p9.add_run(
                             '1.{}.2 工程造价：工程送审{:.2f}元，审定金额为{:.2f}元，审减造价{:.2f}元。'
@@ -855,7 +860,10 @@ def handle_excel_gui():
                     for every_list in last_item:
                         zong_jing_e += float(every_list[1])
                         song_shen_e += float(every_list[2])
-                        shen_ding_e += float(every_list[3])
+                        if every_list[3]:
+                            shen_ding_e += float(every_list[3])
+                        else:
+                            shen_ding_e = 0.00
                     sheng_jian = song_shen_e - shen_ding_e
                     avg_shen_jian = (sheng_jian / song_shen_e) * 100
                     p6 = document.add_paragraph()
@@ -906,7 +914,10 @@ def handle_excel_gui():
                             for test_item in sort_company:
                                 if list_company[7] == test_item[7]:
                                     sec_songshen_e += float(test_item[2])
-                                    sec_shending_e += float(test_item[3])
+                                    if test_item[3]:
+                                        sec_shending_e += float(test_item[3])
+                                    else:
+                                        sec_songshen_e = 0.00
                             sec_shenjian_e = sec_songshen_e - sec_shending_e
                             run_p9 = p9.add_run(
                                 '1.{}.2 工程造价：工程送审{:.2f}元，审定金额为{:.2f}元，审减造价{:.2f}元。'
